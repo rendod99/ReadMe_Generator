@@ -1,16 +1,120 @@
-// array of questions for user
-const questions = [
+const inquirer = require("inquirer");
+const fs = require("fs");
+const util = require("util");
+const writeFileAsync = util.promisify(fs.writeFile);
+inquirer
+  .prompt([
+    {
+      type: "input",
+      message: "what is the title of your application?",
+      name: "title"
+    },
+    {
+      type: "input",
+      message: "Give a description of your application",
+      name: "description"
+    },
+    {
+      type: "checkbox",
+      message: "What Licence will you be using?",
+      name: "license",
+      choices: [ 
+        "BSD", 
+        "MIT", 
+        "GPL", 
+        
+      ]},
+    {
+      type: "input",
+      message: "Provide installation instructions",
+      name: "installation"
+    },
+    {
+      type: "input",
+      message: "Usage:",
+      name: "usage"
+    },
+    {
+      type: "input",
+      message: "Contributing:",
+      name: "contributing"
+    },
+    {
+      type: "input",
+      message: "Test:",
+      name: "test"
+    },
+    {
+      type: "input",
+      message: "Provide technologies used seperated by comma",
+      name: "technologies"
+    },
+    {
+      type: "input",
+      message: "provide github username",
+      name: "github"
+    },
+    {
+      type: "input",
+      message: "provide email address",
+      name: "email"
+    }
+  ])
+  .then(function(response) {
+    async function writeMd() {
+        try {
 
-];
+            let mdToWrite = 
+`# ${response.title}
 
-// function to write README file
-function writeToFile(fileName, data) {
-}
 
-// function to initialize program
-function init() {
+## Description:
+ * ${response.description}
+            
+ 
+ ## Table of contents
+* [License](#license)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Contributing](#contributing)
+* [Test](#test)
+* [Technologies](#technologies)
+* [Questions](#questions)
+            
+            
+## License
+* ${response.license}           
+            
+## Installation
+* ${response.installation}
+            
+            
+## Usage
+* ${response.usage}
+            
+## Contributing
+* ${response.contributing}
+            
+## Test
+* ${response.test}
+            
+## Technologies
+Project is created with:
+* ${response.technologies}
+            
+            
+## Questions
+* Links:
+* [GitHub-page](github.com/${response.github})
+* [Email](${response.email})`
 
-}
+          await writeFileAsync("index.md", mdToWrite);
 
-// function call to initialize program
-init();
+          console.log(`Your ReadMe has been created`)      
+
+        } catch(err) {
+          console.log(err)
+        }
+      }
+      writeMd();
+  });
