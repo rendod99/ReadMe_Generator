@@ -20,7 +20,7 @@ inquirer
       name: "license",
       choices: [ 
         "BSD", 
-        "MIT", 
+        "MIT",
         "GPL", 
         
       ]},
@@ -31,17 +31,17 @@ inquirer
     },
     {
       type: "input",
-      message: "Usage:",
+      message: "Provide Usage information:",
       name: "usage"
     },
     {
       type: "input",
-      message: "Contributing:",
+      message: "Contribution Guidelines:",
       name: "contributing"
     },
     {
       type: "input",
-      message: "Test:",
+      message: "Test Instructions:",
       name: "test"
     },
     {
@@ -65,14 +65,14 @@ inquirer
         try {
 
             let mdToWrite = 
-`# ${response.title}
+`# ${response.title} 
+
 
 
 ## Description:
- * ${response.description}
-            
+* ${response.description}          
  
- ## Table of contents
+## Table of contents
 * [License](#license)
 * [Installation](#installation)
 * [Usage](#usage)
@@ -83,12 +83,12 @@ inquirer
             
             
 ## License
-* ${response.license}           
+* ${response.license}        
             
 ## Installation
 * ${response.installation}
-            
-            
+
+       
 ## Usage
 * ${response.usage}
             
@@ -104,17 +104,24 @@ Project is created with:
             
             
 ## Questions
-* Links:
-* [GitHub-page](github.com/${response.github})
-* [Email](${response.email})`
+
+* GutHub Username: ${response.github}
+
+github.com/${response.github}
+
+### You can email me at:
+
+${response.email}`
 
           await writeFileAsync("index.md", mdToWrite);
 
-          console.log(`Your ReadMe has been created`)      
+          console.log(`Sucess! README was Generated!`)      
 
         } catch(err) {
           console.log(err)
         }
       }
+      
       writeMd();
+      
   });
